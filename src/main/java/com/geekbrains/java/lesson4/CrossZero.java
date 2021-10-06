@@ -212,40 +212,4 @@ public class CrossZero {
         }
         return false;
     }
-    // Блокировка хода PLAER (не готова)
-    public static void pcCheckWin(){
-        for (int g = 0; g <=  SIZE - DOTS_TO_WIN; g++) {
-            for (int v = 0; v <= SIZE - DOTS_TO_WIN; v++) {
-                for (int i = 0; i < DOTS_TO_WIN; i++) {
-                    for (int j = 0; j < DOTS_TO_WIN; j++) {
-                        mapCheck[i][j] = map[i + g][j + v];
-                        if(mapCheck[i][j] == DOT_EMPTY)
-                            mapCheck[i][j] = DOT_PLAER;
-                    }
-                }
-                if (checkWin3(DOT_PLAER)) {
-
-                }
-            }
-        }
-    }
-    public static boolean checkWin3(char symb){
-        // горизонтайль и вертикаль
-        for (int i = 0; i < DOTS_TO_WIN; i++) {
-            boolean horizontal = true, vertical = true;
-            for (int j = 0; j < DOTS_TO_WIN; j++) {
-                horizontal = horizontal & (mapCheck[i][j] == symb);
-                vertical = vertical & (mapCheck[j][i] == symb);
-            }
-            if (horizontal || vertical) return true;
-        }
-        // диагонали
-        boolean rightDiag = true, leftDiag = true;
-        for (int i = 0; i < DOTS_TO_WIN; i++) {
-            rightDiag = rightDiag & (mapCheck[i][i] == symb);
-            leftDiag = leftDiag & (mapCheck[i][DOTS_TO_WIN-1 - i] == symb);
-        }
-        if(rightDiag || leftDiag) return true;
-        return false;
-    }
 }
