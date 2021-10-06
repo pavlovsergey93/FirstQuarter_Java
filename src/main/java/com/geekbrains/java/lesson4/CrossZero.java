@@ -175,26 +175,7 @@ public class CrossZero {
         }
         return true;
     }
-//    public static boolean checkWin(char symb){
-//        // горизонтайль и вертикаль
-//        for (int i = 0; i < SIZE; i++) {
-//            boolean horizontal = true, vertical = true;
-//            for (int j = 0; j < SIZE; j++) {
-//                horizontal = horizontal & (map[i][j] == symb);
-//                vertical = vertical & (map[j][i] == symb);
-//            }
-//            if (horizontal || vertical) return true;
-//        }
-//        // диагонали
-//        boolean rightDiag = true, leftDiag = true;
-//        for (int i = 0; i < SIZE; i++) {
-//            rightDiag = rightDiag & (map[i][i] == symb);
-//            leftDiag = leftDiag & (map[i][SIZE-1 - i] == symb);
-//        }
-//        if(rightDiag || leftDiag) return true;
-//        return false;
-//    }
-    public static boolean checkWin2(char symb){
+    public static boolean checkWin(char symb){
         // горизонтайль и вертикаль
         for (int i = 0; i < DOTS_TO_WIN; i++) {
             boolean horizontal = true, vertical = true;
@@ -226,7 +207,7 @@ public class CrossZero {
 //                    System.out.print("|");
 //                    System.out.println();
                 }
-                if(checkWin2(DOT_PLAER) || checkWin2(DOT_PC)) return true;
+                if(checkWin(DOT_PLAER) || checkWin(DOT_PC)) return true;
             }
         }
         return false;
