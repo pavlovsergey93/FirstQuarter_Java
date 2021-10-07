@@ -213,4 +213,8 @@ public class CrossZero {
         }
         return false;
     }
+    // добавить код для блокировки ходов PLAER
+    public static void psBlock(){
+
+    }
 }
