@@ -2,6 +2,7 @@ package com.geekbrains.java.lesson4;
 
 import java.io.Console;
 import java.io.IOException;
+import java.lang.ref.Cleaner;
 import java.util.Scanner;
 
 public class CrossZero {
