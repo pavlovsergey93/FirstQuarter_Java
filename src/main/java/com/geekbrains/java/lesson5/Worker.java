@@ -11,17 +11,16 @@ public class Worker {
     private int age;
 
     public Worker() {   }
-    public Worker(String _surname, String _name, String _patronymic, String _post, String _email,
-                                     int _phoneNumber, int _wage, int _age){
-        this.surname = _surname;
-        this.name = _name;
-        this.patronymic = _patronymic;
-        this.post = _post;
-        this.wage = _wage;
-        this.age = _age;
-        this.phoneNumber = _phoneNumber;
-        this.email = _email;
-
+    public Worker(String surname, String name, String patronymic, String post, String email,
+                                     int phoneNumber, int wage, int age){
+        setSurname(surname);
+        setName(name);
+        setPatronymic(patronymic);
+        setPost(post);
+        setEmail(email);
+        setPhoneNumber(phoneNumber);
+        setWage(wage);
+        setAge(age);
     }
     public void printInfoWorker(){
         System.out.printf("ФИО: %s %s %s \nДолжность: %s \nВозраст: %s \nE-mail: %s \nТелефон: %s \nЗаработная плата: %s\n", surname, name, patronymic, post, age, email, phoneNumber, wage);
@@ -31,48 +30,48 @@ public class Worker {
         this.surname = surname;
     }
     public String getSurname(){
-        return surname;
+        return this.surname;
     }
     public void setName(String name){
         this.name = name;
     }
     public String getName(){
-        return name;
+        return this.name;
     }
     public void setPatronymic(String patronymic){
         this.patronymic = patronymic;
     }
     public String getPatronymic(){
-        return patronymic;
+        return this.patronymic;
     }
     public void setPost(String post){
         this.post = post;
     }
     public String getPost(){
-        return post;
+        return this.post;
     }
     public void setEmail(String email){
         this.email = email;
     }
     public String getEmail(){
-        return email;
+        return this.email;
     }
     public void setPhoneNumber(int phoneNumber){
         this.phoneNumber = phoneNumber;
     }
     public int getPhoneNumber(){
-        return phoneNumber;
+        return this.phoneNumber;
     }
     public void setWage(int wage){
         this.wage = wage;
     }
     public int getWage(){
-        return wage;
+        return this.wage;
     }
     public void setAge(int age){
         this.age = age;
     }
     public int getAge(){
-        return age;
+        return this.age;
     }
 }
