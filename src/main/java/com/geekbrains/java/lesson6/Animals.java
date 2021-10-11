@@ -1,7 +1,7 @@
 package com.geekbrains.java.lesson6;
 
 public abstract class Animals {
-    private int ANIMALS = 0;
+    private static int ANIMALS;
     private String name;
     private String species;
     private String color;
@@ -39,10 +39,10 @@ public abstract class Animals {
     }
 
     public void setANIMALS(int ANIMALS) {
-        this.ANIMALS = ANIMALS;
+        this.ANIMALS += ANIMALS;
     }
 
-    public int getANIMALS() {
+    public static int getANIMALS() {
         return ANIMALS;
     }
 
