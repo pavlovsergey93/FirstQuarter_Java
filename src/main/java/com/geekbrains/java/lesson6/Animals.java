@@ -1,6 +1,7 @@
 package com.geekbrains.java.lesson6;
 
 public abstract class Animals {
+    private int ANIMALS = 0;
     private String name;
     private String species;
     private String color;
@@ -36,6 +37,15 @@ public abstract class Animals {
     public double getAge() {
         return age;
     }
-    abstract void runAnimal();
-    abstract void swimAnimal();
+
+    public void setANIMALS(int ANIMALS) {
+        this.ANIMALS = ANIMALS;
+    }
+
+    public int getANIMALS() {
+        return ANIMALS;
+    }
+
+    abstract void runAnimal(int run);
+    abstract void swimAnimal(int swim);
 }
