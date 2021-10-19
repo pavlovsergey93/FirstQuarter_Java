@@ -8,6 +8,10 @@ public class Product {
     public Product(){
 
     }
+    public Product(String name, int count){
+        setNameProduct(name);
+        setCountProduct(count);
+    }
     public Product(String name, int price, int count){
         setNameProduct(name);
         setPriceProduct(price);

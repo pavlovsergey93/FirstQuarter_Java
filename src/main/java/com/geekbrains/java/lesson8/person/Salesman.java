@@ -9,7 +9,7 @@ public class Salesman extends Person {
     private String secondNameSalesman;
     private List<Product> productList;
 
-    public void sellProducts(Customer customer, String weWannaBuyName, int weWannaBuyCount){
+    public boolean sellProducts(Customer customer, String weWannaBuyName, int weWannaBuyCount){
         for(Product product: productList){
             //Проверяем по названию продукта его наличие у продавца
             if(product.getNameProduct().equals(weWannaBuyName)){
@@ -28,14 +28,15 @@ public class Salesman extends Person {
                         customerProduct.setCountProduct(weWannaBuyCount);
                         customerProduct.setNameProduct(weWannaBuyName);
                         customer.addPurchaseList(customerProduct);
-                        return;
+                        return true;
                     }
 
                 }
 
             }
         }
-        System.out.printf("Продукт у продовца %s %s не найден либо его количество мало, или недостаточно денег у покупателя", nameSalesman, secondNameSalesman);
+        //System.out.printf("Продукт у продовца %s %s не найден либо его количество мало, или недостаточно денег у покупателя", nameSalesman, secondNameSalesman);
+        return false;
     }
 
     public Salesman(String name, String secondNameSalesman, int cash, List<Product> productList){
