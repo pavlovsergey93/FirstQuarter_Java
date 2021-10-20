@@ -12,48 +12,80 @@ public class Main {
     public static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         Market market = new Market();
-
-        System.out.println("Вы 1-Продавец 2-Покупатель");
-        int sc = scanner.nextInt();
-        if(sc == 1) {
-            List<Salesman> salesmanList = new ArrayList<>();
-            while(true) {
-                System.out.println("Введите Имя:");
-                String name = scanner.nextLine();
-                System.out.println("Введите фамилию: ");
-                String secondName = scanner.nextLine();
-                salesmanList.add(createFirstSalseman(name, secondName, 0));
-                market.setSalesmanList(salesmanList);
-                System.out.println("Добавить продовца? y/n");
-                String result = scanner.nextLine();
-                if(result == "n") return;
-            }
-        }
-        else if (sc == 2) {
+        List<Salesman> salesmanList = new ArrayList<>();
+        System.out.println("Введите данные продавца");
+        do {
+            System.out.print("Имя продавца: ");
+            String name = scanner.nextLine();
+            System.out.print("Фамилия продавца: ");
+            String secondName = scanner.nextLine();
+            salesmanList.add(createSalseman(name, secondName, 0));
+            market.setSalesmanList(salesmanList);
+            System.out.println("Добавить продовца? (y/n) ");
+            char result = scanner.next().charAt(0);
+            scanner.nextLine();
+            if(result == 'n') break;
+        }while(true);
+        do {
+            System.out.println("-----Список покупок------");
             Customer customer = createCustemer();
             customer.findProductOnMarket(market);
             customer.whatIBoughtIngo();
-        }
+            System.out.println("----------------------------");
+            System.out.print("Следующий покупатель? (y/n) ");
+            char res = scanner.next().charAt(0);
+            scanner.nextLine();
+            if(res == 'n') break;
+        }while(true);
     }
-    private static Salesman createFirstSalseman(String name, String secondName, int cash) {
+    private static Salesman createSalseman(String name, String secondName, int cash) {
+        boolean resultBoolean = true;
         List<Product> productList = new ArrayList<>();
-        while (true) {
-            System.out.println("Наименование продукта: ");
-            String nameProduct = scanner.nextLine();
-            System.out.println("Цена продукта: ");
-            int priceProduct = scanner.nextInt();
-            System.out.println("Количество продукта:");
-            int countProduct = scanner.nextInt();
-            Product firstProduct = new Product(nameProduct, priceProduct, countProduct);
-            productList.add(firstProduct);
-        }
         Salesman salesman = new Salesman(name, secondName, cash, productList);
+        do {
+            Product product = new Product();
+
+            System.out.print("Наименование продукта: ");
+            String nameProduct = scanner.nextLine();
+            product.setNameProduct(nameProduct);
+
+            System.out.print("Цена продукта: ");
+            int priceProduct = scanner.nextInt();
+            product.setPriceProduct(priceProduct);
+
+            System.out.print("Количество продукта:");
+            int countProduct = scanner.nextInt();
+            product.setCountProduct(countProduct);
+
+            salesman.addProductList(product);
+
+            System.out.println("Добавить продукт? (y/n) ");
+            char result = scanner.next().charAt(0);
+            scanner.nextLine();
+
+            if(result == 'n') {
+                resultBoolean = false;
+            }
+        }while(resultBoolean);
         return salesman;
     }
     private static Customer createCustemer(){
-        Product firstProduct = new Product("Помидоры", 3);
-        Product secondProduct = new Product("Огурцы", 5);
-        return new Customer(List.of(firstProduct, secondProduct),80);
+        List<Product> productList = new ArrayList<>();
+        do {
+            System.out.print("Наименование продукта: ");
+            String name = scanner.nextLine();
+            System.out.print("Необходимое количество: ");
+            int count = scanner.nextInt();
+            Product product = new Product(name, count);
+            productList.add(product);
+            System.out.print("Добавить продукт? (y/n) ");
+            char res = scanner.next().charAt(0);
+            scanner.nextLine();
+            if(res == 'n') break;
+        }while(true);
+        System.out.print("Количество денег: ");
+        int cash = scanner.nextInt();
+        return new Customer(productList, cash);
     }
 
 }

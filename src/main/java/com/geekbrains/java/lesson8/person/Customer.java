@@ -27,13 +27,19 @@ public class Customer extends Person {
             purchaseList = new ArrayList<>();
         }
         purchaseList.add(product);
+    }
 
+    public  void addWeWannaBuyList(Product product){
+        if(weWannaBuyProduct == null){
+            weWannaBuyProduct = new ArrayList<>();
+        }
+        weWannaBuyProduct.add(product);
     }
     public void whatIBoughtIngo(){
         System.out.println();
-        if (purchaseList != null) {
+        //if (purchaseList != null) {
             StringBuilder stringBuilder = new StringBuilder("Я купил: \n");
-            for (Product product : this.purchaseList) {
+            for (Product product : purchaseList) {
                 stringBuilder.append(product.getNameProduct());
                 stringBuilder.append(" в количестве ");
                 stringBuilder.append(product.getCountProduct());
@@ -43,14 +49,14 @@ public class Customer extends Person {
             stringBuilder.append(getCash());
             stringBuilder.append(" рублей.");
             System.out.println(stringBuilder);
-        }
-        else System.out.printf("%s рублей(я) не хватило на покупки", getCash());
+    //    }
+    //    else System.out.printf("%s рублей(я) не хватило на покупки", getCash());
     }
 
     public void findProductOnMarket(Market market) {
         for (Salesman salesman: market.getSalesmanList()){
-            boolean isBought = salesman.sellProducts(this, "Огурцы", 10);
-            if(isBought) break;
+            boolean isBought = salesman.sellProducts(this, getWeWannaBuyProduct(), market);
+            if(isBought) continue;
         }
     }
 

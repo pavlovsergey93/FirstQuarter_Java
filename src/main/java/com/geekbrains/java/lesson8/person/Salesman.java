@@ -1,7 +1,9 @@
 package com.geekbrains.java.lesson8.person;
 
+import com.geekbrains.java.lesson8.Market;
 import com.geekbrains.java.lesson8.product.Product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Salesman extends Person {
@@ -9,30 +11,44 @@ public class Salesman extends Person {
     private String secondNameSalesman;
     private List<Product> productList;
 
-    public boolean sellProducts(Customer customer, String weWannaBuyName, int weWannaBuyCount){
-        for(Product product: productList){
-            //Проверяем по названию продукта его наличие у продавца
-            if(product.getNameProduct().equals(weWannaBuyName)){
-                //Проверяем есть ли у данного продавца нужное колличество продукта
-                if(product.getCountProduct() >= weWannaBuyCount){
-                    //Проверяем хватает ли денег у покупателя на нужное количество продуктов
-                    long requiredCash = product.getPriceProduct()*weWannaBuyCount;
-                    if(customer.getCash()>= requiredCash){
-                        customer.setCash((int) (customer.getCash() - requiredCash));
+    public void addProductList(Product product){
+        if(productList == null){
+            productList = new ArrayList<>();
+        }
+        productList.add(product);
+    }
 
-                        this.setCash((int)(this.getCash() + requiredCash));
+    public boolean sellProducts(Customer customer, List <Product> customerProductList, Market market){
+        for (Salesman salesman: market.getSalesmanList()) {
+            int i = 0;
+            for (Product productCus : customerProductList) {
+                for (Product product : this.productList) {
+                    //Проверяем по названию продукта его наличие у продавца
+                    if (product.getNameProduct().equals(customerProductList.get(i).getNameProduct())) {
+                        //Проверяем есть ли у данного продавца нужное колличество продукта
+                        if (product.getCountProduct() >= customerProductList.get(i).getCountProduct()) {
+                            //Проверяем хватает ли денег у покупателя на нужное количество продуктов
+                            long requiredCash = product.getPriceProduct() * customerProductList.get(i).getCountProduct();
+                            if (customer.getCash() >= requiredCash) {
+                                customer.setCash((int) (customer.getCash() - requiredCash));
 
-                        product.setCountProduct(product.getCountProduct() - weWannaBuyCount);
+                                this.setCash((int) (this.getCash() + requiredCash));
 
-                        Product customerProduct = new Product();
-                        customerProduct.setCountProduct(weWannaBuyCount);
-                        customerProduct.setNameProduct(weWannaBuyName);
-                        customer.addPurchaseList(customerProduct);
-                        return true;
+                                product.setCountProduct(product.getCountProduct() - customerProductList.get(i).getCountProduct());
+
+                                Product customerProduct = new Product();
+                                customerProduct.setCountProduct(customerProductList.get(i).getCountProduct());
+                                customerProduct.setNameProduct(customerProductList.get(i).getNameProduct());
+                                customer.addPurchaseList(customerProduct);
+                                i++;
+                                return true;
+                            }
+
+                        }
+
                     }
-
+                    i++;
                 }
-
             }
         }
         //System.out.printf("Продукт у продовца %s %s не найден либо его количество мало, или недостаточно денег у покупателя", nameSalesman, secondNameSalesman);
