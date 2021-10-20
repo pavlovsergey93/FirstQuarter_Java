@@ -29,7 +29,20 @@ public class Main {
         do {
             System.out.println("-----Список покупок------");
             Customer customer = createCustemer();
-            customer.findProductOnMarket(market);
+            System.out.println("Совершить покупку у конкретного продовца? (y/n) ");
+            char result = scanner.next().charAt(0);
+            if (result == 'y'){
+                System.out.print("Имя продавца: ");
+                String name = scanner.nextLine();
+                scanner.next();
+                System.out.print("Фамилия продавца: ");
+                String secondName = scanner.nextLine();
+                scanner.next();
+                customer.findProductOnMarketFindSalesman(market, name, secondName);
+            }
+            else {
+                customer.findProductOnMarket(market);
+            }
             customer.whatIBoughtIngo();
             System.out.println("----------------------------");
             System.out.print("Следующий покупатель? (y/n) ");

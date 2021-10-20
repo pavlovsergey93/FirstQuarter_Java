@@ -20,34 +20,34 @@ public class Salesman extends Person {
 
     public boolean sellProducts(Customer customer, List <Product> customerProductList, Market market){
         for (Salesman salesman: market.getSalesmanList()) {
-            int i = 0;
+
             for (Product productCus : customerProductList) {
                 for (Product product : this.productList) {
                     //Проверяем по названию продукта его наличие у продавца
-                    if (product.getNameProduct().equals(customerProductList.get(i).getNameProduct())) {
+                    if (product.getNameProduct().equals(productCus.getNameProduct())) {
                         //Проверяем есть ли у данного продавца нужное колличество продукта
-                        if (product.getCountProduct() >= customerProductList.get(i).getCountProduct()) {
+                        if (product.getCountProduct() >= productCus.getCountProduct()) {
                             //Проверяем хватает ли денег у покупателя на нужное количество продуктов
-                            long requiredCash = product.getPriceProduct() * customerProductList.get(i).getCountProduct();
+                            long requiredCash = product.getPriceProduct() * productCus.getCountProduct();
                             if (customer.getCash() >= requiredCash) {
                                 customer.setCash((int) (customer.getCash() - requiredCash));
 
                                 this.setCash((int) (this.getCash() + requiredCash));
 
-                                product.setCountProduct(product.getCountProduct() - customerProductList.get(i).getCountProduct());
+                                product.setCountProduct(product.getCountProduct() - productCus.getCountProduct());
 
                                 Product customerProduct = new Product();
-                                customerProduct.setCountProduct(customerProductList.get(i).getCountProduct());
-                                customerProduct.setNameProduct(customerProductList.get(i).getNameProduct());
+                                customerProduct.setCountProduct(productCus.getCountProduct());
+                                customerProduct.setNameProduct(productCus.getNameProduct());
                                 customer.addPurchaseList(customerProduct);
-                                i++;
+
                                 return true;
                             }
 
                         }
 
                     }
-                    i++;
+
                 }
             }
         }
@@ -84,5 +84,31 @@ public class Salesman extends Person {
 
     public void setProductList(List<Product> productList) {
         this.productList = productList;
+    }
+    public boolean sellProductsSalesman(Customer customer, List <Product> customerProductList){
+        for (Product productCus : customerProductList) {
+            for (Product product : this.productList) {
+                //Проверяем по названию продукта его наличие у продавца
+                if (product.getNameProduct().equals(productCus.getNameProduct())) {
+                    //Проверяем есть ли у данного продавца нужное колличество продукта
+                    if (product.getCountProduct() >= productCus.getCountProduct()) {
+                        //Проверяем хватает ли денег у покупателя на нужное количество продуктов
+                        long requiredCash = product.getPriceProduct() * productCus.getCountProduct();
+                        if (customer.getCash() >= requiredCash) {
+                            customer.setCash((int) (customer.getCash() - requiredCash));
+                            this.setCash((int) (this.getCash() + requiredCash));
+                            product.setCountProduct(product.getCountProduct() - productCus.getCountProduct());
+                            Product customerProduct = new Product();
+                            customerProduct.setCountProduct(productCus.getCountProduct());
+                            customerProduct.setNameProduct(productCus.getNameProduct());
+                            customer.addPurchaseList(customerProduct);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        System.out.printf("Продукт у продовца %s %s не найден либо его количество мало, или недостаточно денег у покупателя", nameSalesman, secondNameSalesman);
+        return false;
     }
 }

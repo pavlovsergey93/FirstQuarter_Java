@@ -59,6 +59,17 @@ public class Customer extends Person {
             if(isBought) continue;
         }
     }
+    public void findProductOnMarketFindSalesman(Market market, String name, String secondName) {
+        for (Salesman salesman: market.getSalesmanList()){
+            if(salesman.getNameSalesman().equals(name) && salesman.getSecondNameSalesman().equals(secondName)) {
+                boolean isBought = salesman.sellProductsSalesman(this, getWeWannaBuyProduct());
+                if (isBought) continue;
+            }
+        }
+        if(getPurchaseList() != getWeWannaBuyProduct()) {
+            findProductOnMarket(market);
+        }
+    }
 
     public List<Product> getWeWannaBuyProduct() {
         return weWannaBuyProduct;
