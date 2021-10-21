@@ -20,7 +20,6 @@ public class Salesman extends Person {
 
     public boolean sellProducts(Customer customer, List <Product> customerProductList, Market market){
         for (Salesman salesman: market.getSalesmanList()) {
-
             for (Product productCus : customerProductList) {
                 for (Product product : this.productList) {
                     //Проверяем по названию продукта его наличие у продавца
