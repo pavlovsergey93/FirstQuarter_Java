@@ -11,26 +11,7 @@ public class Synchronization {
         long a2 = System.currentTimeMillis();
         return (a2-a1);
     }
-
     public synchronized long method2(float array[], int half, int size){
-        long a1 = System.currentTimeMillis();
-        initArray(array);
-        float arr12[] = new float[half];
-        float arr22[] = new float[half];
-        System.arraycopy(array, 0, arr12, 0, half);
-        System.arraycopy(array, half, arr22, 0, half);
-
-        Synchronization sync1 = new Synchronization();
-        new Thread(()-> sync1.calculator(arr12)).start();
-        new Thread(()-> sync1.calculator(arr22)).start();
-
-        System.arraycopy(arr12, 0 , array, 0, half);
-        System.arraycopy(arr22, 0, array, 0, half);
-
-        long a2 = System.currentTimeMillis();
-        return (a2-a1);
-    }
-    public synchronized long method3(float array[], int half, int size){
         long a1 = System.currentTimeMillis();
         initArray(array);
         float arr12[] = new float[half];

@@ -11,7 +11,6 @@ public class Main {
         Synchronization sync = new Synchronization();
         new Thread(()-> System.out.println("Выполнение подсчета в один поток: " + sync.method1(array) + " мс")).start();
         new Thread(()-> System.out.println("Выполнение подсчета в два потока: " + sync.method2(array, HALF, SIZE)+ " мс")).start();
-        new Thread(()-> System.out.println("Выполнение подсчета в два потока (CountDownLatch): " + sync.method3(array, HALF, SIZE)+ " мс")).start();
     }
 
 }
