@@ -62,7 +62,7 @@ class Car implements Runnable {
         for (int i = 0; i < race.getStages().size(); i++) {
             race.getStages().get(i).go(this);
         }
-        if(MainClass.cdlFinish.getCount() == CARS_COUNT-1){
+        if(MainClass.cdlFinish.getCount() < CARS_COUNT){
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
