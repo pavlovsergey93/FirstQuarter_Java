@@ -8,6 +8,8 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class MainClass {
     public static final int CARS_COUNT = 4;
@@ -15,6 +17,7 @@ public class MainClass {
     public static CountDownLatch cdlFinish = new CountDownLatch(CARS_COUNT);
     public static CyclicBarrier cd = new CyclicBarrier(CARS_COUNT);
     public static Semaphore smp = new Semaphore(CARS_COUNT/2);
+    public static Lock lock = new ReentrantLock();
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Подготовка!!!");
@@ -51,6 +54,7 @@ class Car implements Runnable {
     }
     @Override
     public void run() {
+
         try {
             System.out.println(this.name + " готовится");
             Thread.sleep(500 + (int)(Math.random() * 800));
@@ -67,13 +71,19 @@ class Car implements Runnable {
         } catch (BrokenBarrierException e) {
             e.printStackTrace();
         }
+
         for (int i = 0; i < race.getStages().size(); i++) {
             race.getStages().get(i).go(this);
         }
-        System.out.println(this.getName() + " >>>>> ФИНИШИРОВАЛ!!!!");
-        MainClass.cdlFinish.countDown();
-        if(MainClass.cdlFinish.getCount() == (CARS_COUNT - 1)){
-            System.out.println(">>>>>>>>>>>>>>>>> " + this.getName() + " WIN!!!");
+        try {
+            MainClass.lock.lock();
+            System.out.println(this.getName() + " >>>>> ФИНИШИРОВАЛ!!!!");
+            MainClass.cdlFinish.countDown();
+            if (MainClass.cdlFinish.getCount() == (CARS_COUNT - 1)) {
+                System.out.println(">>>>>>>>>>>>>>>>> " + this.getName() + " WIN!!!");
+            }
+        }finally {
+            MainClass.lock.unlock();
         }
     }
 }
@@ -90,12 +100,23 @@ class Road extends Stage {
         this.length = length;
         this.description = "Дорога " + length + " метров";
     }
+
     @Override
     public void go(Car c) {
         try {
-            System.out.println(c.getName() + " начал этап: " + description);
+            try {
+                MainClass.lock.lock();
+                System.out.println(c.getName() + " начал этап: " + description);
+            } finally {
+                MainClass.lock.unlock();
+            }
             Thread.sleep(length / c.getSpeed() * 1000);
-            System.out.println(c.getName() + " закончил этап: " + description);
+            try {
+                MainClass.lock.lock();
+                System.out.println(c.getName() + " закончил этап: " + description);
+            } finally {
+                MainClass.lock.unlock();
+            }
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -107,18 +128,34 @@ class Tunnel extends Stage {
         this.length = 80;
         this.description = "Тоннель " + length + " метров";
     }
+
     @Override
     public void go(Car c) {
         try {
             try {
-                System.out.println(c.getName() + " готовится к этапу(ждет): " + description);
+                try {
+                    MainClass.lock.lock();
+                    System.out.println(c.getName() + " готовится к этапу(ждет): " + description);
+                } finally {
+                    MainClass.lock.unlock();
+                }
                 MainClass.smp.acquire();
-                System.out.println(c.getName() + " начал этап: " + description);
+                try {
+                    MainClass.lock.lock();
+                    System.out.println(c.getName() + " начал этап: " + description);
+                } finally {
+                    MainClass.lock.unlock();
+                }
                 Thread.sleep(length / c.getSpeed() * 1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
-                System.out.println(c.getName() + " закончил этап: " + description);
+                try {
+                    MainClass.lock.lock();
+                    System.out.println(c.getName() + " закончил этап: " + description);
+                } finally {
+                    MainClass.lock.unlock();
+                }
                 MainClass.smp.release();
             }
         } catch (Exception e) {
