@@ -4,6 +4,7 @@ import com.geekbrains.java.lesson5.Main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Semaphore;
@@ -59,15 +60,15 @@ class Car implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        try {
+            MainClass.cd.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (BrokenBarrierException e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < race.getStages().size(); i++) {
             race.getStages().get(i).go(this);
-        }
-        if(MainClass.cdlFinish.getCount() < CARS_COUNT){
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
         System.out.println(this.getName() + " >>>>> ФИНИШИРОВАЛ!!!!");
         MainClass.cdlFinish.countDown();

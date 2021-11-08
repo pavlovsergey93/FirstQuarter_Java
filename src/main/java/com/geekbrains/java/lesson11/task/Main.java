@@ -22,15 +22,17 @@ public class Main {
         Box<Orange> orangeBox1 = new Box<>(orange1);
         Box<Orange> orangeBox2 = new Box<>(orange2);
 
+        appleBox1.transferToAnotherBox(orangeBox1);
+
         System.out.println(appleBox1.getWeight());
         System.out.println(appleBox2.getWeight());
         System.out.println(orangeBox1.getWeight());
         System.out.println(orangeBox2.getWeight());
 
-        appleBox1.transferToAnotherBox();
+        //appleBox1.transferToAnotherBox();
 
-        Box newBox = appleBox2.transferToAnotherBox();
-        System.out.println(newBox.getWeight());
+        //Box newBox = appleBox2.transferToAnotherBox();
+        //System.out.println(newBox.getWeight());
         System.out.println(appleBox2.getWeight());
 
 

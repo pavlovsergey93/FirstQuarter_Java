@@ -25,10 +25,15 @@ public class Box<T extends Fruit> {
         System.out.println("Коробки не равны");
         return false;
     }
-    public Box<T> transferToAnotherBox(){
-        Box<T> newBox = new Box<>(this.getFruitBox());
-        this.setFruitBox(null);
-        return newBox;
+    public void transferToAnotherBox(Box<?> box) {
+        if (this.fruitBox.getClass().equals(box.getClass())) {
+            for (int i = 0; i < fruitBox.length; i++) {
+            //     box.setCount += fruitBox[i].getCount();
+                fruitBox[i].setCount(0);
+            }
+        }else{
+            System.out.println("Нет возможности пересыпать фрукты в эту коробку");
+        }
     }
 
     public T[] getFruitBox() {
